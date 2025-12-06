@@ -11,4 +11,7 @@ interface UserRepository : JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.login = :login AND u.password = :password")
     fun authorization(@Param("login") login: String,
                       @Param("password") password: String): User?
+
+    @Query("SELECT u FROM User u WHERE u.login = :login")
+    fun existsUser(@Param("login") login: String): User?
 }
