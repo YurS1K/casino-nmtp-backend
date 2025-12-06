@@ -1,12 +1,13 @@
 package casino.nmtp.web.casinonmtpbackend.controllers
 
+import casino.nmtp.web.casinonmtpbackend.models.requests.UserAuthorizationRequest
+import casino.nmtp.web.casinonmtpbackend.models.requests.UserRegisterRequest
 import casino.nmtp.web.casinonmtpbackend.models.responses.UserAuthorizationResponse
 import casino.nmtp.web.casinonmtpbackend.services.UserService
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -14,17 +15,14 @@ import org.springframework.web.bind.annotation.RestController
 class UserController (
     private val userService: UserService
 ) {
-    @GetMapping("/auth")
+    @PostMapping("/auth")
     fun authentification(
-        @RequestParam(value = "login", required = true) login: String,
-        @RequestParam(value = "password", required = true) password: String,
-    ): ResponseEntity<UserAuthorizationResponse> = userService.userAuthorization(login, password)
+        @RequestBody(required = true) userAuthorizationRequest: UserAuthorizationRequest
+    ): ResponseEntity<UserAuthorizationResponse> = userService.userAuthorization(userAuthorizationRequest)
 
 
     @PostMapping("/register")
     fun register(
-        @RequestParam(value = "login", required = true) login: String,
-        @RequestParam(value = "password", required = true) password: String,
-        @RequestParam(value = "username", required = true) username: String,
-    ): ResponseEntity<UserAuthorizationResponse> = userService.userRegistration(login, password, username)
+        @RequestBody(required = true) userRegisterRequest: UserRegisterRequest
+    ): ResponseEntity<UserAuthorizationResponse> = userService.userRegistration(userRegisterRequest)
 }

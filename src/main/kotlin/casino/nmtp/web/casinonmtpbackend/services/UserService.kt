@@ -2,6 +2,8 @@ package casino.nmtp.web.casinonmtpbackend.services
 
 import casino.nmtp.web.casinonmtpbackend.entities.User
 import casino.nmtp.web.casinonmtpbackend.enums.UserRole
+import casino.nmtp.web.casinonmtpbackend.models.requests.UserAuthorizationRequest
+import casino.nmtp.web.casinonmtpbackend.models.requests.UserRegisterRequest
 import casino.nmtp.web.casinonmtpbackend.models.responses.UserAuthorizationResponse
 import casino.nmtp.web.casinonmtpbackend.repositories.UserRepository
 import org.springframework.http.HttpStatus
@@ -13,20 +15,20 @@ import java.time.LocalDate
 class UserService (
     val userRepository: UserRepository
 ) {
-    fun userAuthorization(login: String, password: String): ResponseEntity<UserAuthorizationResponse> {
-        val user = userRepository.authorization(login, password)
-        if (user != null) {
-            return ResponseEntity(UserAuthorizationResponse(user.id), HttpStatus.OK)
+    fun userAuthorization(userAuthorizationRequest: UserAuthorizationRequest): ResponseEntity<UserAuthorizationResponse> {
+        val user = userRepository.authorization(userAuthorizationRequest.login, userAuthorizationRequest.password)
+        return if (user != null) {
+            ResponseEntity(UserAuthorizationResponse(user.id), HttpStatus.OK)
         } else {
-            return ResponseEntity(HttpStatus.UNAUTHORIZED)
+            ResponseEntity(HttpStatus.UNAUTHORIZED)
         }
     }
 
-    fun userRegistration(login: String, password: String, username: String): ResponseEntity<UserAuthorizationResponse> {
+    fun userRegistration(userRegisterRequest: UserRegisterRequest): ResponseEntity<UserAuthorizationResponse> {
         val user = User(
-            login = login,
-            password = password,
-            username = username,
+            login = userRegisterRequest.login,
+            password = userRegisterRequest.password,
+            username = userRegisterRequest.username,
             role = UserRole.USER,
             registrationDate = LocalDate.now()
         )
