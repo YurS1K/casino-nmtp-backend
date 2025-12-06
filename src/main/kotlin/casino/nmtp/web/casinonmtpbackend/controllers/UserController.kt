@@ -1,6 +1,5 @@
 package casino.nmtp.web.casinonmtpbackend.controllers
 
-import casino.nmtp.web.casinonmtpbackend.enums.UserRole
 import casino.nmtp.web.casinonmtpbackend.models.responses.UserAuthorizationResponse
 import casino.nmtp.web.casinonmtpbackend.services.UserService
 import org.springframework.http.ResponseEntity
