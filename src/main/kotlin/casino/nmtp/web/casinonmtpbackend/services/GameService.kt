@@ -27,8 +27,7 @@ class GameService (
         val transaction = Transaction(
             game = game,
             user = user,
-            winAmount = if (gameResult.winLostAmount > 0) gameResult.winLostAmount else 0,
-            lossAmount = if (gameResult.winLostAmount < 0) gameResult.winLostAmount else 0,
+            winLostAmount = gameResult.winLostAmount,
             betAmount = gameResult.betAmount
         )
 
