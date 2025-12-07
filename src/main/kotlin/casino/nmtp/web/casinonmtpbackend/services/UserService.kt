@@ -3,7 +3,7 @@ package casino.nmtp.web.casinonmtpbackend.services
 import casino.nmtp.web.casinonmtpbackend.entities.User
 import casino.nmtp.web.casinonmtpbackend.models.requests.UserAuthorizationRequest
 import casino.nmtp.web.casinonmtpbackend.models.requests.UserRegisterRequest
-import casino.nmtp.web.casinonmtpbackend.models.responses.UserIdResponse
+import casino.nmtp.web.casinonmtpbackend.models.responses.UserLoginResponse
 import casino.nmtp.web.casinonmtpbackend.models.responses.UserInfoResponse
 import casino.nmtp.web.casinonmtpbackend.repositories.UserRepository
 import org.springframework.http.HttpStatus
@@ -15,16 +15,16 @@ import java.time.LocalDate
 class UserService (
     val userRepository: UserRepository
 ) {
-    fun userAuthorization(userAuthorizationRequest: UserAuthorizationRequest): ResponseEntity<UserIdResponse> {
+    fun userAuthorization(userAuthorizationRequest: UserAuthorizationRequest): ResponseEntity<UserLoginResponse> {
         val user = userRepository.authorization(userAuthorizationRequest.login, userAuthorizationRequest.password)
         return if (user != null) {
-            ResponseEntity(UserIdResponse(user.id), HttpStatus.OK)
+            ResponseEntity(UserLoginResponse(user.login), HttpStatus.OK)
         } else {
             ResponseEntity(HttpStatus.UNAUTHORIZED)
         }
     }
 
-    fun userRegistration(userRegisterRequest: UserRegisterRequest): ResponseEntity<UserIdResponse> {
+    fun userRegistration(userRegisterRequest: UserRegisterRequest): ResponseEntity<UserLoginResponse> {
         if (userRepository.existsUser(userRegisterRequest.login) != null) return ResponseEntity(HttpStatus.CONFLICT)
         val user = User(
             login = userRegisterRequest.login,
@@ -32,7 +32,7 @@ class UserService (
             registrationDate = LocalDate.now()
         )
         userRepository.save(user)
-        return ResponseEntity(UserIdResponse(user.id), HttpStatus.CREATED)
+        return ResponseEntity(UserLoginResponse(user.login), HttpStatus.CREATED)
     }
 
     fun getUserInfo(username: String): ResponseEntity<UserInfoResponse> {
