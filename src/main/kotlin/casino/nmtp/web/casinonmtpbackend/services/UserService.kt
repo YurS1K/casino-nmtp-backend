@@ -1,7 +1,6 @@
 package casino.nmtp.web.casinonmtpbackend.services
 
 import casino.nmtp.web.casinonmtpbackend.entities.User
-import casino.nmtp.web.casinonmtpbackend.enums.UserRole
 import casino.nmtp.web.casinonmtpbackend.models.requests.UserAuthorizationRequest
 import casino.nmtp.web.casinonmtpbackend.models.requests.UserRegisterRequest
 import casino.nmtp.web.casinonmtpbackend.models.responses.UserIdResponse
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import java.time.LocalDate
-import kotlin.jvm.optionals.getOrNull
 
 @Service
 class UserService (
@@ -32,7 +30,6 @@ class UserService (
             login = userRegisterRequest.login,
             password = userRegisterRequest.password,
             username = userRegisterRequest.username,
-            role = UserRole.USER,
             registrationDate = LocalDate.now()
         )
         userRepository.save(user)
@@ -41,6 +38,6 @@ class UserService (
 
     fun getUserInfo(id: Long): ResponseEntity<UserInfoResponse> {
         val user = userRepository.findById(id).get()
-        return ResponseEntity(UserInfoResponse(user.username, user.registrationDate,user.balance, user.role), HttpStatus.OK)
+        return ResponseEntity(UserInfoResponse(user.username, user.registrationDate,user.balance), HttpStatus.OK)
     }
 }

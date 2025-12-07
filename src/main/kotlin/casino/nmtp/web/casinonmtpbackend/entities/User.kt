@@ -1,6 +1,5 @@
 package casino.nmtp.web.casinonmtpbackend.entities
 
-import casino.nmtp.web.casinonmtpbackend.enums.UserRole
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -18,7 +17,6 @@ data class User(
     var login: String,
     var password : String,
     var username: String,
-    var role : UserRole,
     var registrationDate : LocalDate,
     var balance : Long = 1000L,
 )
