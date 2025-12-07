@@ -14,4 +14,7 @@ interface UserRepository : JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.login = :login")
     fun existsUser(@Param("login") login: String): User?
+
+    @Query("SELECT u FROM User u WHERE u.login = :username")
+    fun findByUsername(@Param("username") username: String): User?
 }

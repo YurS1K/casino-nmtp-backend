@@ -29,15 +29,15 @@ class UserService (
         val user = User(
             login = userRegisterRequest.login,
             password = userRegisterRequest.password,
-            username = userRegisterRequest.username,
             registrationDate = LocalDate.now()
         )
         userRepository.save(user)
         return ResponseEntity(UserIdResponse(user.id), HttpStatus.CREATED)
     }
 
-    fun getUserInfo(id: Long): ResponseEntity<UserInfoResponse> {
-        val user = userRepository.findById(id).get()
-        return ResponseEntity(UserInfoResponse(user.username, user.registrationDate,user.balance), HttpStatus.OK)
+    fun getUserInfo(username: String): ResponseEntity<UserInfoResponse> {
+        val user = userRepository.findByUsername(username)
+            ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+        return ResponseEntity(UserInfoResponse(user.login, user.registrationDate,user.balance), HttpStatus.OK)
     }
 }

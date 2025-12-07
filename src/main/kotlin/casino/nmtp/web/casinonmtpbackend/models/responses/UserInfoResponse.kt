@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 
 data class UserInfoResponse(
-    var username: String,
+    var login: String,
     var registrationDate: LocalDate,
     var balance: Long,
 )

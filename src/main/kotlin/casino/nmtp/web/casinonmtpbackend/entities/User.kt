@@ -16,7 +16,6 @@ data class User(
     var id: Long = 0L,
     var login: String,
     var password : String,
-    var username: String,
     var registrationDate : LocalDate,
     var balance : Long = 1000L,
 )
