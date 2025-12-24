@@ -26,9 +26,7 @@ data class Transaction(
 
     var date: LocalDate = LocalDate.now(),
 
-    var winAmount: Long,
-
-    var lossAmount: Long,
+    var winLostAmount: Long,
 
     var betAmount: Long,
 )

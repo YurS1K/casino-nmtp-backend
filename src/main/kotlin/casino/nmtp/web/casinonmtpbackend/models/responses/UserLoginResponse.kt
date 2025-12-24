@@ -1,5 +1,5 @@
 package casino.nmtp.web.casinonmtpbackend.models.responses
 
-data class UserAuthorizationResponse(
-    val id : Long,
+data class UserLoginResponse(
+    val login : String,
 )
