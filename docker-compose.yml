@@ -24,7 +24,6 @@ services:
       DB_PASSWORD: super_secret
     ports:
       - "8080:8080"
-    # Добавляем имя сети для связи с фронтендом
     networks:
       - app-network
 
