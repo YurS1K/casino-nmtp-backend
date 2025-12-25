@@ -14,19 +14,14 @@ import java.time.LocalDate
 data class Transaction(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id : Long = 0L,
-
+    var id: Long = 0L,
     @ManyToOne
     @JoinColumn(name = "game_id", nullable = false)
-    var game : Game,
-
+    var game: Game,
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    var user : User,
-
+    var user: User,
     var date: LocalDate = LocalDate.now(),
-
     var winLostAmount: Long,
-
     var betAmount: Long,
 )

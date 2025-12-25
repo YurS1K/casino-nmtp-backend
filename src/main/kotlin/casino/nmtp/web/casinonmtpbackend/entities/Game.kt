@@ -11,7 +11,6 @@ import jakarta.persistence.Table
 data class Game(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id : Long = 0L,
-
+    var id: Long = 0L,
     var gameMode: String,
 )

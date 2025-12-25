@@ -3,7 +3,7 @@ package casino.nmtp.web.casinonmtpbackend.services
 import casino.nmtp.web.casinonmtpbackend.entities.Game
 import casino.nmtp.web.casinonmtpbackend.entities.Transaction
 import casino.nmtp.web.casinonmtpbackend.models.requests.GameRegistrationRequest
-import casino.nmtp.web.casinonmtpbackend.models.responses.GameRegistrationResponse
+import casino.nmtp.web.casinonmtpbackend.models.responses.MessageResponse
 import casino.nmtp.web.casinonmtpbackend.repositories.GameRepository
 import casino.nmtp.web.casinonmtpbackend.repositories.TransactionRepository
 import casino.nmtp.web.casinonmtpbackend.repositories.UserRepository
@@ -12,29 +12,34 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
-class GameService (
+class GameService(
     val userRepository: UserRepository,
     val gameRepository: GameRepository,
     val transactionRepository: TransactionRepository,
 ) {
-    fun registerGame(gameResult: GameRegistrationRequest): ResponseEntity<GameRegistrationResponse>{
+    fun registerGame(gameResult: GameRegistrationRequest): ResponseEntity<MessageResponse> {
         val game = Game(gameMode = gameResult.game)
 
+        var user =
+            userRepository.findByLogin(gameResult.login)
+                ?: return ResponseEntity(
+                    MessageResponse("Пользователь не найден"),
+                    HttpStatus.NOT_FOUND,
+                )
+        user = user.apply { balance += gameResult.winLostAmount }
 
-        var user = userRepository.findByUsername(gameResult.login) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
-        user = user.apply { balance += gameResult.winLostAmount}
-
-        val transaction = Transaction(
-            game = game,
-            user = user,
-            winLostAmount = gameResult.winLostAmount,
-            betAmount = gameResult.betAmount
-        )
+        val transaction =
+            Transaction(
+                game = game,
+                user = user,
+                winLostAmount = gameResult.winLostAmount,
+                betAmount = gameResult.betAmount,
+            )
 
         gameRepository.save(game)
         userRepository.save(user)
         transactionRepository.save(transaction)
 
-        return ResponseEntity(HttpStatus.CREATED)
+        return ResponseEntity(MessageResponse("Игра успешно зарегистрирована"), HttpStatus.OK)
     }
 }

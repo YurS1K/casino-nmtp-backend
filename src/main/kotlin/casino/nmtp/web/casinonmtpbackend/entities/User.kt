@@ -7,7 +7,6 @@ import jakarta.persistence.Id
 import jakarta.persistence.Table
 import java.time.LocalDate
 
-
 @Entity
 @Table(name = "users")
 data class User(
@@ -15,7 +14,7 @@ data class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0L,
     var login: String,
-    var password : String,
-    var registrationDate : LocalDate,
-    var balance : Long = 1000L,
+    var password: String,
+    var registrationDate: LocalDate,
+    var balance: Long = 1000L,
 )
