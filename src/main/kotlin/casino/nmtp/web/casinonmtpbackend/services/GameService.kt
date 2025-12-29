@@ -17,7 +17,7 @@ class GameService(
     val gameRepository: GameRepository,
     val transactionRepository: TransactionRepository,
 ) {
-    fun registerGame(gameResult: GameRegistrationRequest): ResponseEntity<MessageResponse> {
+    fun registerGame(gameResult: GameRegistrationRequest): ResponseEntity<Any> {
         val game = Game(gameMode = gameResult.game)
 
         var user =
@@ -40,6 +40,6 @@ class GameService(
         userRepository.save(user)
         transactionRepository.save(transaction)
 
-        return ResponseEntity(MessageResponse("Игра успешно зарегистрирована"), HttpStatus.OK)
+        return ResponseEntity(HttpStatus.OK)
     }
 }

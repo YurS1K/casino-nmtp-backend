@@ -1,7 +1,6 @@
 package casino.nmtp.web.casinonmtpbackend.controllers
 
 import casino.nmtp.web.casinonmtpbackend.models.requests.GameRegistrationRequest
-import casino.nmtp.web.casinonmtpbackend.models.responses.MessageResponse
 import casino.nmtp.web.casinonmtpbackend.services.GameService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -15,5 +14,5 @@ class GameController(
     @PostMapping("/game")
     fun gameResult(
         @RequestBody gameResult: GameRegistrationRequest,
-    ): ResponseEntity<MessageResponse> = gameService.registerGame(gameResult)
+    ): ResponseEntity<Any> = gameService.registerGame(gameResult)
 }

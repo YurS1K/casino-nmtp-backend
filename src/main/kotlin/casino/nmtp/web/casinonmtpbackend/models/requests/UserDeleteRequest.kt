@@ -1,6 +1,5 @@
 package casino.nmtp.web.casinonmtpbackend.models.requests
 
-data class UserRegisterRequest(
+data class UserDeleteRequest(
     val login: String,
-    val password: String,
 )

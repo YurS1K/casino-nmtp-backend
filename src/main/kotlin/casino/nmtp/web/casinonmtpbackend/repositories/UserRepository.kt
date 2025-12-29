@@ -2,6 +2,7 @@ package casino.nmtp.web.casinonmtpbackend.repositories
 
 import casino.nmtp.web.casinonmtpbackend.entities.User
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
@@ -18,4 +19,16 @@ interface UserRepository : JpaRepository<User, Long> {
     fun findByLogin(
         @Param("login") login: String,
     ): User?
+
+    @Modifying
+    @Query("DELETE FROM Transaction t WHERE t.user.id = :userId")
+    fun deleteUserTransactions(
+        @Param("userId") userId: Long,
+    )
+
+    @Modifying
+    @Query("DELETE FROM User u WHERE u.login = :login")
+    fun deleteUser(
+        @Param("login") login: String,
+    )
 }
