@@ -6,7 +6,6 @@ import casino.nmtp.web.casinonmtpbackend.models.requests.UserEditRequest
 import casino.nmtp.web.casinonmtpbackend.models.requests.UserLoginPasswordRequest
 import casino.nmtp.web.casinonmtpbackend.models.responses.UserInfoResponse
 import casino.nmtp.web.casinonmtpbackend.models.responses.UserLoginResponse
-import casino.nmtp.web.casinonmtpbackend.repositories.TransactionRepository
 import casino.nmtp.web.casinonmtpbackend.repositories.UserRepository
 import jakarta.transaction.Transactional
 import org.springframework.http.HttpStatus
@@ -17,7 +16,6 @@ import java.time.LocalDate
 @Service
 class UserService(
     val userRepository: UserRepository,
-    val transactionRepository: TransactionRepository,
 ) {
     fun userAuthorization(userLoginPasswordRequest: UserLoginPasswordRequest): ResponseEntity<UserLoginResponse> {
         val user = userRepository.authorization(userLoginPasswordRequest.login, userLoginPasswordRequest.password)
