@@ -1,5 +1,6 @@
 package casino.nmtp.web.casinonmtpbackend.repositories
 
+import casino.nmtp.web.casinonmtpbackend.entities.Leaderboard
 import casino.nmtp.web.casinonmtpbackend.entities.User
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
@@ -31,4 +32,28 @@ interface UserRepository : JpaRepository<User, Long> {
     fun deleteUser(
         @Param("login") login: String,
     )
+
+    @Query(
+        """
+        SELECT u.login, u.balance
+        FROM User u 
+        ORDER BY u.balance DESC LIMIT 10
+        """,
+    )
+    fun getLeaderboard(): List<Leaderboard>
+
+    @Query(
+        """
+        SELECT COUNT(u) + 1 
+        FROM User u 
+        WHERE u.balance > (
+            SELECT u2.balance 
+            FROM User u2 
+            WHERE u2.login = :login
+        )
+        """,
+    )
+    fun getUserPosition(
+        @Param("login") login: String,
+    ): Long?
 }
