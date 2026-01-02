@@ -46,7 +46,7 @@ interface TransactionRepository : JpaRepository<Transaction, Long> {
 
     @Query(
         """
-            SELECT SUM(t.winLostAmount) FROM Transaction t 
+            SELECT SUM(t.winLostAmount) * -1 FROM Transaction t 
             WHERE t.user.id = :userId 
             AND (:gameMode is null OR t.game.gameMode = :gameMode) AND t.winLostAmount < 0
         """,
