@@ -35,7 +35,7 @@ interface UserRepository : JpaRepository<User, Long> {
 
     @Query(
         """
-        SELECT COUNT(u) + 1, u.login, u.balance
+        SELECT ROW_NUMBER() OVER (ORDER BY u.balance DESC) as position, u.login, u.balance
         FROM User u 
         ORDER BY u.balance DESC LIMIT 10
         """,
