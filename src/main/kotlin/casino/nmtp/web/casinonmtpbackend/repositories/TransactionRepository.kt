@@ -62,7 +62,7 @@ interface TransactionRepository : JpaRepository<Transaction, Long> {
         FROM Transaction t
         JOIN Game g ON t.game.id = g.id
         WHERE t.user.id = :userId
-        GROUP BY g.id, g.gameMode
+        GROUP BY g.gameMode
         ORDER BY COUNT(t.id) DESC
         LIMIT 1
         """,
