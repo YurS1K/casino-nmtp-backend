@@ -13,7 +13,7 @@ interface TransactionRepository : JpaRepository<Transaction, Long> {
         """
         SELECT t.date, t.winLostAmount FROM Transaction t
         WHERE t.user.id = :userId AND t.game.gameMode = :gameMode
-        ORDER by t.date DESC LIMIT 10
+        ORDER by t.id DESC LIMIT 10
     """,
     )
     fun getLastGames(
