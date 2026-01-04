@@ -18,5 +18,5 @@ data class User(
     var password: String,
     var registrationDate: LocalDate,
     var balance: Long = 1000L,
-    var freezeTime: LocalDateTime? = null
+    var freezeTime: LocalDateTime? = null,
 )
