@@ -30,7 +30,8 @@ class GameService(
         user = user.apply { balance += gameResult.winLostAmount }
 
         if (user.balance <= 0) {
-            user.freezeTime = LocalDateTime.now().plusSeconds(5)
+            user.balance = 0
+            user.freezeTime = LocalDateTime.now().plusDays(1)
         }
 
         val transaction =
