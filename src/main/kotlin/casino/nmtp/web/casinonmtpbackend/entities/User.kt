@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "users")
@@ -17,4 +18,5 @@ data class User(
     var password: String,
     var registrationDate: LocalDate,
     var balance: Long = 1000L,
+    var freezeTime: LocalDateTime? = null
 )

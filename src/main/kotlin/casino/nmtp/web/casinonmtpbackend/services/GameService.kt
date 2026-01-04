@@ -10,6 +10,7 @@ import casino.nmtp.web.casinonmtpbackend.repositories.UserRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 class GameService(
@@ -27,6 +28,10 @@ class GameService(
                     HttpStatus.NOT_FOUND,
                 )
         user = user.apply { balance += gameResult.winLostAmount }
+
+        if (user.balance <= 0) {
+            user.freezeTime = LocalDateTime.now().plusSeconds(5)
+        }
 
         val transaction =
             Transaction(
