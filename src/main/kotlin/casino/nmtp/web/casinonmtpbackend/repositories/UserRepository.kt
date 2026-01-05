@@ -42,14 +42,16 @@ interface UserRepository : JpaRepository<User, Long> {
     )
     fun getLeaderboard(): List<Leaderboard>
 
-    @Query(
-        """
-        SELECT COUNT(u) + 1 
-        FROM (SELECT ROW_NUMBER() OVER (ORDER BY u.balance DESC) as position, u.login, u.balance
-                FROM User u 
-                ORDER BY u.balance DESC LIMIT 10)
-        WHERE u.login = :login
-        """,
+    @Query("""
+        SELECT ranked_users.position
+        FROM (
+            SELECT 
+                u.login,
+                ROW_NUMBER() OVER (ORDER BY u.balance DESC) as position
+            FROM User u
+            ) ranked_users
+        WHERE ranked_users.login = :login
+    """
     )
     fun getUserPosition(
         @Param("login") login: String,
