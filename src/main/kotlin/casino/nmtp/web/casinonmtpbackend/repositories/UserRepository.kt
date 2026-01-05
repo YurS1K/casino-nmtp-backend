@@ -42,7 +42,8 @@ interface UserRepository : JpaRepository<User, Long> {
     )
     fun getLeaderboard(): List<Leaderboard>
 
-    @Query("""
+    @Query(
+        """
         SELECT ranked_users.position
         FROM (
             SELECT 
@@ -52,7 +53,7 @@ interface UserRepository : JpaRepository<User, Long> {
             ) ranked_users
         WHERE ranked_users.login = :login
     """,
-        nativeQuery = true
+        nativeQuery = true,
     )
     fun getUserPosition(
         @Param("login") login: String,

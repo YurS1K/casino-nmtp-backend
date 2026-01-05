@@ -3,7 +3,6 @@ package casino.nmtp.web.casinonmtpbackend.services
 import casino.nmtp.web.casinonmtpbackend.entities.Game
 import casino.nmtp.web.casinonmtpbackend.entities.Transaction
 import casino.nmtp.web.casinonmtpbackend.models.requests.GameRegistrationRequest
-import casino.nmtp.web.casinonmtpbackend.models.responses.MessageResponse
 import casino.nmtp.web.casinonmtpbackend.repositories.GameRepository
 import casino.nmtp.web.casinonmtpbackend.repositories.TransactionRepository
 import casino.nmtp.web.casinonmtpbackend.repositories.UserRepository
@@ -22,10 +21,7 @@ class GameService(
 
         var user =
             userRepository.findByLogin(gameResult.login)
-                ?: return ResponseEntity(
-                    MessageResponse("Пользователь не найден"),
-                    HttpStatus.NOT_FOUND,
-                )
+                ?: return ResponseEntity(HttpStatus.NOT_FOUND)
         user = user.apply { balance += gameResult.winLostAmount }
 
         val transaction =
