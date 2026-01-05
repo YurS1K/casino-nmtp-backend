@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Service
 class UserService(
@@ -46,6 +47,14 @@ class UserService(
         val user =
             userRepository.findByLogin(login)
                 ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+
+        user.freezeTime?.let {
+            if (LocalDateTime.now().isAfter(it)) {
+                user.freezeTime = null
+                user.balance = 1000
+            }
+        }
+
         return ResponseEntity(UserInfoResponse(user.login, user.registrationDate, user.balance), HttpStatus.OK)
     }
 
