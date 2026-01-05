@@ -48,7 +48,7 @@ interface UserRepository : JpaRepository<User, Long> {
             SELECT 
                 u.login,
                 ROW_NUMBER() OVER (ORDER BY u.balance DESC) as position
-            FROM User u
+            FROM users u
             ) ranked_users
         WHERE ranked_users.login = :login
     """,
