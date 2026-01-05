@@ -51,7 +51,8 @@ interface UserRepository : JpaRepository<User, Long> {
             FROM User u
             ) ranked_users
         WHERE ranked_users.login = :login
-    """
+    """,
+        nativeQuery = true
     )
     fun getUserPosition(
         @Param("login") login: String,
