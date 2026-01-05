@@ -45,12 +45,10 @@ interface UserRepository : JpaRepository<User, Long> {
     @Query(
         """
         SELECT COUNT(u) + 1 
-        FROM User u 
-        WHERE u.balance > (
-            SELECT u2.balance 
-            FROM User u2 
-            WHERE u2.login = :login
-        )
+        FROM (SELECT ROW_NUMBER() OVER (ORDER BY u.balance DESC) as position, u.login, u.balance
+                FROM User u 
+                ORDER BY u.balance DESC LIMIT 10)
+        WHERE u.login = :login
         """,
     )
     fun getUserPosition(
