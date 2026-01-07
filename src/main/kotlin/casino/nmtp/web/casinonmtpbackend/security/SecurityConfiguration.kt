@@ -2,6 +2,7 @@ package casino.nmtp.web.casinonmtpbackend.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.annotation.Order
 import org.springframework.http.HttpStatus
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -16,12 +17,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @EnableWebSecurity
 class SecurityConfiguration {
     @Bean
+    @Order(1)
     fun corsConfigurationSource(): CorsConfigurationSource {
         val corsConfiguration = CorsConfiguration()
-        corsConfiguration.allowedMethods = listOf("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS") // Разрешённые методы
-        corsConfiguration.allowedHeaders = listOf("*") // Разрешённые заголовки
-        corsConfiguration.allowCredentials = true // Разрешение на использование куки
-        corsConfiguration.allowedOriginPatterns = listOf("*")
+        corsConfiguration.allowedMethods =
+            listOf("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+        corsConfiguration.allowedHeaders = listOf("*")
+        corsConfiguration.allowCredentials = true
+        corsConfiguration.allowedOrigins = listOf("http://localhost:5173", "http://localhost:80")
 
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", corsConfiguration)

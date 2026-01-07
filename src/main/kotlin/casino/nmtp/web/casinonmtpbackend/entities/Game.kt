@@ -1,6 +1,5 @@
 package casino.nmtp.web.casinonmtpbackend.entities
 
-import casino.nmtp.web.casinonmtpbackend.enums.GameMode
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -12,7 +11,6 @@ import jakarta.persistence.Table
 data class Game(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id : Long = 0L,
-
-    var gameMode: GameMode
+    var id: Long = 0L,
+    var gameMode: String,
 )

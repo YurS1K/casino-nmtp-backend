@@ -1,6 +1,7 @@
 package casino.nmtp.web.casinonmtpbackend.models.requests
 
-data class UserAuthorizationRequest(
+data class UserEditRequest(
     val login: String,
-    val password: String
+    val newLogin: String?,
+    val password: String?,
 )

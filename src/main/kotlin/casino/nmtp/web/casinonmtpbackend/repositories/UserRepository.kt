@@ -1,7 +1,9 @@
 package casino.nmtp.web.casinonmtpbackend.repositories
 
+import casino.nmtp.web.casinonmtpbackend.entities.Leaderboard
 import casino.nmtp.web.casinonmtpbackend.entities.User
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
@@ -9,6 +11,51 @@ import org.springframework.stereotype.Repository
 @Repository
 interface UserRepository : JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.login = :login AND u.password = :password")
-    fun authorization(@Param("login") login: String,
-                      @Param("password") password: String): User?
+    fun authorization(
+        @Param("login") login: String,
+        @Param("password") password: String,
+    ): User?
+
+    @Query("SELECT u FROM User u WHERE u.login = :login")
+    fun findByLogin(
+        @Param("login") login: String,
+    ): User?
+
+    @Modifying
+    @Query("DELETE FROM Transaction t WHERE t.user.id = :userId")
+    fun deleteUserTransactions(
+        @Param("userId") userId: Long,
+    )
+
+    @Modifying
+    @Query("DELETE FROM User u WHERE u.login = :login")
+    fun deleteUser(
+        @Param("login") login: String,
+    )
+
+    @Query(
+        """
+        SELECT ROW_NUMBER() OVER (ORDER BY u.balance DESC) as position, u.login, u.balance
+        FROM User u 
+        ORDER BY u.balance DESC LIMIT 10
+        """,
+    )
+    fun getLeaderboard(): List<Leaderboard>
+
+    @Query(
+        """
+        SELECT ranked_users.position
+        FROM (
+            SELECT 
+                u.login,
+                ROW_NUMBER() OVER (ORDER BY u.balance DESC) as position
+            FROM users u
+            ) ranked_users
+        WHERE ranked_users.login = :login
+    """,
+        nativeQuery = true,
+    )
+    fun getUserPosition(
+        @Param("login") login: String,
+    ): Long?
 }
