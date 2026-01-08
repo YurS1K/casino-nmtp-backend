@@ -4,9 +4,10 @@
 1. git clone https://github.com/pkabkov/casino-nmtp.git
 2. git clone https://github.com/YurS1K/casino-nmtp-backend.git
 3. cd casino-nmtp/nmtp-front
-4. npm run dev
-5. cd ../../casino-nmtp-backend
-6. ./gradlew build
-7. docker-compose build
-8. docker-compose up -d
-9. Зайти на localhost
+4. npm install
+5. npm run dev
+6. cd ../../casino-nmtp-backend
+7. ./gradlew build
+8. docker-compose build
+9. docker-compose up -d
+10. Зайти на localhost
