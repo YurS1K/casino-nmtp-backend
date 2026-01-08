@@ -5,7 +5,7 @@
 2. git clone https://github.com/YurS1K/casino-nmtp-backend.git
 3. cd casino-nmtp/nmtp-front
 4. npm run dev
-5. cd ../../casino-nmtp-backend*
+5. cd ../../casino-nmtp-backend
 6. ./gradlew build
 7. docker-compose build
 8. docker-compose up -d
